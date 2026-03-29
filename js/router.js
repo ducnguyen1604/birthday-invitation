@@ -1,18 +1,45 @@
-const routes = {
-  intro: "/pages/intro.html",
-  letter: "/pages/letter.html",
-  invite: "/pages/invite.html",
-  plan: "/pages/plan.html",
-  result: "/pages/result.html",
-};
+// ===== ROUTER FILE =====
+// Quản lý navigation giữa các pages
 
-export async function navigate(page) {
-  const app = document.getElementById("app");
-  const res = await fetch(routes[page]);
-  const html = await res.text();
-  app.innerHTML = html;
+let currentPage = 'letter';
 
-  // load JS tương ứng
-  const module = await import(`./pages/${page}.js`);
-  module.init();
+function navigateTo(page) {
+    currentPage = page;
+    const app = document.getElementById('app');
+    
+    // Remove active class from all pages
+    const pages = app.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    
+    // Render new page
+    if (page === 'letter') {
+        app.innerHTML = renderLetterPage();
+        setTimeout(() => {
+            initLetterPage();
+            app.querySelector('.page').classList.add('active');
+        }, 0);
+    } else if (page === 'love-letter') {
+        app.innerHTML = renderLoveLetterPage();
+        app.querySelector('.page').classList.add('active');
+    } else if (page === 'planning') {
+        app.innerHTML = renderPlanningPage();
+        setTimeout(() => {
+            initPlanningPage();
+            app.querySelector('.page').classList.add('active');
+        }, 0);
+    }
+    
+    window.scrollTo(0, 0);
+}
+
+function goToLoveLetter() {
+    navigateTo('love-letter');
+}
+
+function goToPlanning() {
+    navigateTo('planning');
+}
+
+function goToLetter() {
+    navigateTo('letter');
 }

@@ -1,0 +1,448 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #ffd1e8 0%, #ffe4f0 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* PAGE TRANSITIONS */
+.page {
+    display: none;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PAGE 1: LETTER */
+.page-letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+}
+
+.letter-wrapper {
+    perspective: 1200px;
+}
+
+.letter-container {
+    width: 300px;
+    height: 200px;
+    background: #ff6b81;
+    position: relative;
+    cursor: pointer;
+    border: 3px solid #ff4757;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Mái thư - dùng border-top */
+.letter-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 100px solid #ff4757;
+    transform-origin: top center;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 20;
+}
+
+.letter-container.open .letter-flap {
+    transform: rotateX(175deg);
+}
+
+/* Nội dung thư - hiện sau khi mở */
+.letter-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.4s;
+}
+
+.letter-container.open .letter-content {
+    opacity: 1;
+}
+
+.letter-title {
+    font-size: 28px;
+    color: #dddcda;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 2px;
+    font-family: 'Georgia', serif;
+}
+
+.letter-subtitle {
+    font-size: 18px;
+    color: #e0dddb;
+    font-style: italic;
+    margin: 8px 0 0 0;
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+}
+
+.letter-hint {
+    margin-top: 60px;
+    font-size: 13px;
+    color: #d946a6;
+    animation: bounce 2.5s infinite;
+    font-style: italic;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-8px); opacity: 1; }
+}
+
+.letter-container:hover {
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+}
+
+/* PAGE 2: LOVE LETTER */
+.page-love-letter {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 40px rgba(255, 182, 217, 0.3);
+}
+
+.love-letter-content {
+    text-align: center;
+    color: #333;
+}
+
+.love-letter-content h1 {
+    font-size: 32px;
+    color: #d946a6;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* Các p bình thường (không typing) */
+.love-letter-content p:not(.typing) {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #555;
+    text-align: left;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* highlight vẫn giữ nguyên */
+.love-letter-content .highlight {
+    color: #d946a6;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.signature {
+    margin-top: 40px;
+    font-style: italic;
+    color: #d946a6;
+    font-size: 18px;
+}
+
+/* button */
+.page-button {
+    background: linear-gradient(135deg, #ffb6d9, #ff8fb3);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 182, 217, 0.4);
+}
+
+.page-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 182, 217, 0.5);
+}
+
+/* typing effect */
+.typing {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    color: #555;
+    text-align: left;      /* căn trái */
+    white-space: pre-wrap; /* giữ xuống dòng nếu có */
+    min-height: 20px;
+    width: 100%;           /* giữ chiều ngang cố định */
+    display: block;        /* bỏ inline-block để tránh nhảy */
+}
+
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* fadeInUp animation cũ cho p bình thường */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PAGE 3: PLANNING */
+.page-planning {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.planning-header {
+    text-align: center;
+    color: #d946a6;
+    margin-bottom: 40px;
+}
+
+.planning-header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.planning-header p {
+    color: #999;
+    font-size: 14px;
+}
+
+/* TIMELINE SECTION */
+.timeline-section {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(255, 182, 217, 0.2);
+}
+
+.timeline-slot {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 2px dashed #ffc0e0;
+}
+
+.timeline-slot:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.slot-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d946a6;
+    margin-bottom: 15px;
+}
+
+.slot-category {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #ffb6d9;
+}
+
+.checkbox-item label {
+    cursor: pointer;
+    color: #555;
+    font-size: 15px;
+}
+
+.select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.select-group label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.select-group select {
+    padding: 10px;
+    border: 2px solid #ffc0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #fff5fb;
+}
+
+.select-group select:focus {
+    outline: none;
+    border-color: #ffb6d9;
+    background-color: white;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+}
+
+.radio-item input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #ffb6d9;
+}
+
+.radio-item label {
+    cursor: pointer;
+    color: #555;
+    font-size: 15px;
+}
+
+/* DAY 4 SHIFT */
+.shift-box {
+    background: #fff5fb;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #ffb6d9;
+    margin-bottom: 15px;
+}
+
+/* BUTTONS */
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ffb6d9, #ff8fb3);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 182, 217, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 182, 217, 0.5);
+}
+
+.btn-secondary {
+    background: white;
+    color: #d946a6;
+    border: 2px solid #ffb6d9;
+}
+
+.btn-secondary:hover {
+    background: #fff5fb;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .page-love-letter {
+        padding: 30px 20px;
+    }
+
+    .love-letter-content h1 {
+        font-size: 24px;
+    }
+
+    .love-letter-content p {
+        font-size: 14px;
+    }
+
+    .timeline-section {
+        padding: 20px;
+    }
+
+    .slot-title {
+        font-size: 16px;
+    }
+}
