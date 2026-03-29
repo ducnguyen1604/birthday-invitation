@@ -22,7 +22,7 @@ const DATA = {
             { id: 'a1', name: 'Cafe Tmore Tô Tượng' },
             { id: 'a3', name: 'Workshop' },
             { id: 'a8', name: 'Chợ đêm' },
-            { id: 'a9', name: 'Gội đầu dưỡng sinh' },
+            { id: 'a9', name: 'Nạp cồn' },
             { id: 'a10', name: 'Karaoke' },
             { id: 'a6', name: 'Dạo bộ' },
         ]
@@ -67,45 +67,24 @@ const DATA = {
     fineDining: [
         {
             id: 'fd1',
-            name: 'Madame Khánh',
+            name: 'Reden Cafe',
             cuisine: 'Fusion Modern',
             price: '$$$$',
             note: 'Ẩm thực Đông-Tây fusion, view sông Hàn'
         },
         {
             id: 'fd2',
-            name: 'Ombre Lounge & Restaurant',
+            name: 'The View - Yatch Restaurant',
             cuisine: 'Contemporary Asian',
             price: '$$$$',
             note: 'Không gian hiện đại, đồ ăn tinh tế'
         },
         {
             id: 'fd3',
-            name: 'The Lighthouse',
+            name: 'The Temptation',
             cuisine: 'International',
             price: '$$$$',
             note: 'View biển tuyệt đẹp, phục vụ chuyên nghiệp'
-        },
-        {
-            id: 'fd4',
-            name: 'Citron Bistro',
-            cuisine: 'French Contemporary',
-            price: '$$$',
-            note: 'Nhà hàng Pháp hiện đại, atmosphere lãng mạn'
-        },
-        {
-            id: 'fd5',
-            name: 'KOTO Dining',
-            cuisine: 'Vietnamese Contemporary',
-            price: '$$$',
-            note: 'Ẩm thực Việt đương đại, decor sang trọng'
-        },
-        {
-            id: 'fd6',
-            name: 'Rory\'s Bistro',
-            cuisine: 'European',
-            price: '$$$$',
-            note: 'Không gian ấm cúng, món ăn hảo hạng'
         }
     ]
 };

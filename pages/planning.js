@@ -20,7 +20,7 @@ function renderPlanningPage() {
                             <label>Em có muốn ăn đêm không?</label>
                             <select name="day2Evening" required>
                                 <option value="">-- Chọn --</option>
-                                ${DATA.restaurants.dinner.map(r => `<option value="${r}">${r}</option>`).join('')}
+                                ${DATA.restaurants.snack.map(r => `<option value="${r}">${r}</option>`).join('')}
                             </select>
                         </div>
                     </div>
@@ -248,7 +248,7 @@ function renderPrintCard(data) {
             </div>
 
             <div class="invite-sub">
-                "Chỉ cần là đi cùng nhau, làm gì cũng được"
+                Chỉ cần là cùng em, anh làm gì cũng được
             </div>
 
             <div class="heart">— 💕 —</div>
@@ -283,8 +283,7 @@ function renderPrintCard(data) {
                 <div class="item">🍜 Ăn Trưa: ${data.day4.meals.lunch}</div>
                 <div class="item">🎡 Chơi Chiều: ${data.day4.activities.afternoon.join(', ')}</div>
                 
-                <div class="item">🍷 ĂnTối: ${data.day4.meals.dinner}</div>
-                <div class="item">🌙 Tối: ${data.day4.activities.evening.join(', ')}</div>
+                <div class="item">🍷 ĂnTối: ${data.day4.meals.dinner}</div><div class="item">🌙 Tối: ${data.day4.activities.evening.join(', ')}</div>
             </div>
 
             <div class="heart">💌</div>
