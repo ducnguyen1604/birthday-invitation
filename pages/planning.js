@@ -5,380 +5,295 @@ function renderPlanningPage() {
         <div class="page page-planning">
             <div class="planning-header">
                 <h1>📅 Lên Kế Hoạch Sinh Nhật</h1>
-                <p>Cùng nhau quyết định những kỷ niệm đẹp nhất</p>
+                <p>Cùng nhau tạo kỷ niệm đẹp nhất 💖</p>
             </div>
 
             <form id="planningForm">
+
                 <div class="timeline-section">
-                    <!-- NGÀY 2/4 - TỐI -->
+
+                    <!-- NGÀY 2/4 -->
                     <div class="timeline-slot">
-                        <div class="slot-title">🌙 Tối Ngày 2/4 (Thứ 5)</div>
-                        <div class="slot-category">Bữa ăn tối</div>
+                        <div class="slot-title">🌙 Tối Ngày 2/4</div>
+
                         <div class="select-group">
-                            <label for="day2Evening">Em muốn ăn gì?</label>
-                            <select id="day2Evening" name="day2Evening" required>
-                                <option value="">-- Chọn quán --</option>
+                            <label>Em có muốn ăn đêm không?</label>
+                            <select name="day2Evening" required>
+                                <option value="">-- Chọn --</option>
                                 ${DATA.restaurants.dinner.map(r => `<option value="${r}">${r}</option>`).join('')}
                             </select>
                         </div>
                     </div>
 
-                    <!-- NGÀY 3/4 - SÁNG -->
+                    <!-- NGÀY 3/4 -->
                     <div class="timeline-slot">
-                        <div class="slot-title">🌅 Sáng Ngày 3/4 (Thứ 6)</div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <div class="slot-category">Hoạt động (chọn tối đa 3)</div>
-                            <div class="checkbox-group">
-                                ${DATA.activities.morning.map(activity => `
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="day3MorningActivity_${activity.id}" 
-                                               name="day3MorningActivities" value="${activity.name}" 
-                                               onchange="validateCheckboxCount(this, 3)">
-                                        <label for="day3MorningActivity_${activity.id}">${activity.name}</label>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
+                        <div class="slot-title">🌅 Ngày 3/4</div>
 
+                        <!-- ĂN TRƯỚC -->
                         <div class="select-group">
-                            <label for="day3Breakfast">Ăn sáng</label>
-                            <select id="day3Breakfast" name="day3Breakfast" required>
+                            <label>Ăn sáng</label>
+                            <select name="day3Breakfast" required>
                                 <option value="">-- Chọn --</option>
                                 ${DATA.restaurants.breakfast.map(r => `<option value="${r}">${r}</option>`).join('')}
                             </select>
                         </div>
-                    </div>
-
-                    <!-- NGÀY 3/4 - CHIỀU -->
-                    <div class="timeline-slot">
-                        <div class="slot-title">☀️ Chiều Ngày 3/4</div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <div class="slot-category">Hoạt động (chọn tối đa 3) - PHOTOBOOTH BẮT BUỘC ✨</div>
-                            <div class="checkbox-group">
-                                ${DATA.activities.afternoon.map(activity => {
-                                    const isPhotobooth = activity.id === 'a5';
-                                    const disabled = isPhotobooth ? 'checked disabled' : '';
-                                    return `
-                                        <div class="checkbox-item">
-                                            <input type="checkbox" id="day3AfternoonActivity_${activity.id}" 
-                                                   name="day3AfternoonActivities" value="${activity.name}" 
-                                                   ${disabled}
-                                                   onchange="validateCheckboxCount(this, 3)">
-                                            <label for="day3AfternoonActivity_${activity.id}">
-                                                ${activity.name} ${isPhotobooth ? '(bắt buộc)' : ''}
-                                            </label>
-                                        </div>
-                                    `;
-                                }).join('')}
-                            </div>
-                        </div>
 
                         <div class="select-group">
-                            <label for="day3Lunch">Ăn trưa</label>
-                            <select id="day3Lunch" name="day3Lunch" required>
+                            <label>Ăn trưa</label>
+                            <select name="day3Lunch" required>
                                 <option value="">-- Chọn --</option>
                                 ${DATA.restaurants.lunch.map(r => `<option value="${r}">${r}</option>`).join('')}
                             </select>
                         </div>
-                    </div>
 
-                    <!-- NGÀY 3/4 - TỐI (FINE DINING) -->
-                    <div class="timeline-slot">
-                        <div class="slot-title">🍽️ Tối Ngày 3/4 - Fine Dining 🎉</div>
-                        <div class="slot-category">Nhà hàng sang trọng</div>
                         <div class="select-group">
-                            <label for="day3Evening">Chọn nhà hàng fine dining</label>
-                            <select id="day3Evening" name="day3Evening" required>
+                            <label>Fine Dining buổi tối 🎉</label>
+                            <select name="day3Dinner" required>
                                 <option value="">-- Chọn --</option>
                                 ${DATA.fineDining.map(fd => 
                                     `<option value="${fd.name}">${fd.name} (${fd.cuisine})</option>`
                                 ).join('')}
                             </select>
                         </div>
+
+                        <!-- HOẠT ĐỘNG -->
+                        <div class="slot-category">Hoạt động buổi sáng</div>
+                        ${renderCheckboxGroup("day3MorningActivities", DATA.activities.morning)}
+
+                        <div class="slot-category">Hoạt động buổi chiều (photobooth bắt buộc ✨)</div>
+                        ${renderCheckboxGroup("day3AfternoonActivities", DATA.activities.afternoon, true)}
+
+                        <div class="slot-category">Hoạt động buổi tối 🌙</div>
+                        ${renderCheckboxGroup("day3EveningActivities", DATA.activities.evening)}
+
                     </div>
 
-                    <!-- NGÀY 4/4 - SHIFT & ACTIVITIES -->
+                    <!-- NGÀY 4/4 -->
                     <div class="timeline-slot">
-                        <div class="slot-title">🌞 Ngày 4/4 (Thứ 7)</div>
-                        
-                        <div class="shift-box" style="margin-bottom: 20px;">
-                            <div class="slot-category" style="margin-bottom: 15px;">Em có lịch làm việc gì?</div>
-                            <div class="radio-group">
-                                <div class="radio-item">
-                                    <input type="radio" id="shift_morning" name="day4Shift" value="morning" 
-                                           onchange="handleDay4ShiftChange()">
-                                    <label for="shift_morning">Ca sáng (4h - 2h chiều)</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="shift_evening" name="day4Shift" value="evening"
-                                           onchange="handleDay4ShiftChange()">
-                                    <label for="shift_evening">Ca tối (2h chiều - 11h đêm)</label>
-                                </div>
-                                <div class="radio-item">
-                                    <input type="radio" id="shift_off" name="day4Shift" value="off"
-                                           onchange="handleDay4ShiftChange()">
-                                    <label for="shift_off">Em được nghỉ 🎊</label>
-                                </div>
-                            </div>
+                        <div class="slot-title">🌞 Ngày 4/4 (Cả ngày bên nhau 💕)</div>
+
+                        <!-- ĂN -->
+                        <div class="select-group">
+                            <label>Ăn sáng</label>
+                            <select name="day4Breakfast" required>
+                                <option value="">-- Chọn --</option>
+                                ${DATA.restaurants.breakfast.map(r => `<option value="${r}">${r}</option>`).join('')}
+                            </select>
                         </div>
 
-                        <!-- Day 4 Activities & Meals (ẩn đầu tiên) -->
-                        <div id="day4ActivitiesSection" style="display: none;">
-                            <div style="margin-bottom: 20px;">
-                                <div class="slot-category">Hoạt động (chọn tối đa 3)</div>
-                                <div class="checkbox-group">
-                                    ${DATA.activities.afternoon.map(activity => `
-                                        <div class="checkbox-item">
-                                            <input type="checkbox" id="day4Activity_${activity.id}" 
-                                                   name="day4Activities" value="${activity.name}"
-                                                   onchange="validateCheckboxCount(this, 3)">
-                                            <label for="day4Activity_${activity.id}">${activity.name}</label>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-
-                            <div class="select-group">
-                                <label id="day4MealLabel">Ăn sáng</label>
-                                <select id="day4Meal" name="day4Meal">
-                                    <option value="">-- Chọn --</option>
-                                </select>
-                            </div>
+                        <div class="select-group">
+                            <label>Ăn trưa</label>
+                            <select name="day4Lunch" required>
+                                <option value="">-- Chọn --</option>
+                                ${DATA.restaurants.lunch.map(r => `<option value="${r}">${r}</option>`).join('')}
+                            </select>
                         </div>
+
+                        <div class="select-group">
+                            <label>Ăn tối</label>
+                            <select name="day4Dinner" required>
+                                <option value="">-- Chọn --</option>
+                                ${DATA.restaurants.dinner.map(r => `<option value="${r}">${r}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- HOẠT ĐỘNG -->
+                        <div class="slot-category">Hoạt động buổi sáng</div>
+                        ${renderCheckboxGroup("day4MorningActivities", DATA.activities.morning)}
+
+                        <div class="slot-category">Hoạt động buổi chiều</div>
+                        ${renderCheckboxGroup("day4AfternoonActivities", DATA.activities.afternoon)}
+
+                        <div class="slot-category">Hoạt động buổi tối 🌙</div>
+                        ${renderCheckboxGroup("day4EveningActivities", DATA.activities.evening)}
+
                     </div>
+
                 </div>
 
-                <!-- BUTTONS -->
+                <!-- BUTTON -->
                 <div class="button-group">
                     <button type="button" class="btn btn-secondary" onclick="goToLoveLetter()">
                         ← Quay Lại
                     </button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        Lưu & Tải Xuống Excel 📊
+                    <button type="submit" class="btn btn-primary">
+                        In thiệp ra 💌
                     </button>
                 </div>
+
             </form>
         </div>
     `;
 }
 
-// ===== PLANNING PAGE LOGIC =====
+
+// ===== COMPONENT: CHECKBOX GROUP =====
+
+function renderCheckboxGroup(name, activities, hasRequired = false) {
+    return `
+        <div class="checkbox-group">
+            ${activities.map(a => {
+                const isRequired = hasRequired && a.id === 'a5';
+                return `
+                    <div class="checkbox-item">
+                        <input type="checkbox"
+                               name="${name}"
+                               value="${a.name}"
+                               ${isRequired ? 'checked disabled' : ''}
+                               onchange="validateCheckboxCount(this, 3)">
+                        <label>${a.name} ${isRequired ? '(bắt buộc)' : ''}</label>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+}
+
+
+// ===== LOGIC =====
 
 function initPlanningPage() {
     const form = document.getElementById('planningForm');
     if (!form) return;
 
     form.addEventListener('submit', handlePlanningSubmit);
-
-    // Load saved data nếu có
-    const savedData = getPlanningData();
-    if (savedData) {
-        loadPlanningDataToForm(savedData);
-    }
 }
 
-function handleDay4ShiftChange() {
-    const selectedShift = document.querySelector('input[name="day4Shift"]:checked');
-    const activitiesSection = document.getElementById('day4ActivitiesSection');
-    const mealLabel = document.getElementById('day4MealLabel');
-    const mealSelect = document.getElementById('day4Meal');
 
-    if (!selectedShift) {
-        activitiesSection.style.display = 'none';
-        return;
-    }
-
-    if (selectedShift.value === 'off') {
-        mealLabel.textContent = 'Chọn bữa ăn & quán';
-        activitiesSection.style.display = 'block';
-        populateDay4MealOptions('full');
-    } else if (selectedShift.value === 'morning') {
-        mealLabel.textContent = 'Ăn tối';
-        activitiesSection.style.display = 'block';
-        populateDay4MealOptions('dinner');
-    } else if (selectedShift.value === 'evening') {
-        mealLabel.textContent = 'Ăn sáng';
-        activitiesSection.style.display = 'block';
-        populateDay4MealOptions('breakfast');
-    }
-}
-
-function populateDay4MealOptions(mealType) {
-    const mealSelect = document.getElementById('day4Meal');
-    let options = '<option value="">-- Chọn --</option>';
-
-    if (mealType === 'full') {
-        const allMeals = [
-            ...DATA.restaurants.breakfast,
-            ...DATA.restaurants.lunch,
-            ...DATA.restaurants.dinner
-        ];
-        options += allMeals.map(m => `<option value="${m}">${m}</option>`).join('');
-    } else if (mealType === 'breakfast') {
-        options += DATA.restaurants.breakfast.map(m => `<option value="${m}">${m}</option>`).join('');
-    } else if (mealType === 'dinner') {
-        options += DATA.restaurants.dinner.map(m => `<option value="${m}">${m}</option>`).join('');
-    }
-
-    mealSelect.innerHTML = options;
-}
+// ===== DATA COLLECT =====
 
 function collectPlanningData() {
     const formData = new FormData(document.getElementById('planningForm'));
-    
-    const day3MorningActivities = formData.getAll('day3MorningActivities');
-    const day3AfternoonActivities = formData.getAll('day3AfternoonActivities');
-    const day4Activities = formData.getAll('day4Activities');
 
     return {
-        day2Evening: {
-            restaurant: formData.get('day2Evening')
+        day2: {
+            dinner: formData.get('day2Evening')
         },
-        day3Morning: {
-            activities: day3MorningActivities
-        },
-        day3Breakfast: {
-            restaurant: formData.get('day3Breakfast')
-        },
-        day3Afternoon: {
-            activities: day3AfternoonActivities
-        },
-        day3Lunch: {
-            restaurant: formData.get('day3Lunch')
-        },
-        day3Evening: {
-            restaurant: formData.get('day3Evening')
+        day3: {
+            meals: {
+                breakfast: formData.get('day3Breakfast'),
+                lunch: formData.get('day3Lunch'),
+                dinner: formData.get('day3Dinner')
+            },
+            activities: {
+                morning: formData.getAll('day3MorningActivities'),
+                afternoon: formData.getAll('day3AfternoonActivities'),
+                evening: formData.getAll('day3EveningActivities')
+            }
         },
         day4: {
-            shift: formData.get('day4Shift'),
-            activities: day4Activities,
-            restaurant: formData.get('day4Meal')
+            meals: {
+                breakfast: formData.get('day4Breakfast'),
+                lunch: formData.get('day4Lunch'),
+                dinner: formData.get('day4Dinner')
+            },
+            activities: {
+                morning: formData.getAll('day4MorningActivities'),
+                afternoon: formData.getAll('day4AfternoonActivities'),
+                evening: formData.getAll('day4EveningActivities')
+            }
         }
     };
 }
 
-function validatePlanningForm() {
-    const data = collectPlanningData();
 
-    if (!data.day2Evening.restaurant) {
-        createToast('❌ Chọn bữa ăn tối ngày 2/4');
+// ===== VALIDATE =====
+
+function validatePlanningForm(data) {
+
+    if (!data.day2.dinner) {
+        createToast('❌ Chọn ăn đêm ngày 2/4');
         return false;
     }
-    if (data.day3Morning.activities.length === 0) {
-        createToast('❌ Chọn ít nhất 1 hoạt động sáng ngày 3/4');
+
+    if (!data.day3.meals.breakfast || !data.day3.meals.lunch || !data.day3.meals.dinner) {
+        createToast('❌ Điền đầy đủ ăn uống ngày 3');
         return false;
     }
-    if (!data.day3Breakfast.restaurant) {
-        createToast('❌ Chọn ăn sáng ngày 3/4');
-        return false;
-    }
-    if (data.day3Afternoon.activities.length === 0) {
-        createToast('❌ Chọn ít nhất 1 hoạt động chiều ngày 3/4');
-        return false;
-    }
-    if (!data.day3Lunch.restaurant) {
-        createToast('❌ Chọn ăn trưa ngày 3/4');
-        return false;
-    }
-    if (!data.day3Evening.restaurant) {
-        createToast('❌ Chọn nhà hàng fine dining');
-        return false;
-    }
-    if (!data.day4.shift) {
-        createToast('❌ Chọn lịch làm việc ngày 4/4');
-        return false;
-    }
-    if (data.day4.activities.length === 0) {
-        createToast('❌ Chọn ít nhất 1 hoạt động ngày 4/4');
-        return false;
-    }
-    if (!data.day4.restaurant) {
-        createToast('❌ Chọn bữa ăn ngày 4/4');
+
+    if (!data.day4.meals.breakfast || !data.day4.meals.lunch || !data.day4.meals.dinner) {
+        createToast('❌ Điền đầy đủ ăn uống ngày 4');
         return false;
     }
 
     return true;
 }
 
+
+// ===== SUBMIT =====
+
 function handlePlanningSubmit(e) {
     e.preventDefault();
 
-    if (!validatePlanningForm()) {
-        return;
-    }
+    const data = collectPlanningData();
 
-    const planningData = collectPlanningData();
-    savePlanningData(planningData);
-    createToast('✅ Dữ liệu đã lưu thành công!');
+    if (!validatePlanningForm(data)) return;
+
+    savePlanningData(data);
+
+    // render thiệp
+    document.body.innerHTML = renderPrintCard(data);
 
     setTimeout(() => {
-        downloadExcel(planningData);
-        createToast('📊 File Excel đã được tải xuống!');
-    }, 500);
+        window.print();
+    }, 300);
 }
 
-function loadPlanningDataToForm(savedData) {
-    if (savedData.day2Evening?.restaurant) {
-        const day2Select = document.getElementById('day2Evening');
-        if (day2Select) day2Select.value = savedData.day2Evening.restaurant;
-    }
+function renderPrintCard(data) {
+    return `
+        <div class="print-card">
 
-    if (savedData.day3Morning?.activities) {
-        savedData.day3Morning.activities.forEach(activity => {
-            const checkboxes = document.querySelectorAll('input[name="day3MorningActivities"]');
-            checkboxes.forEach(cb => {
-                if (cb.value === activity) cb.checked = true;
-            });
-        });
-    }
+            <div class="invite-title">
+                💖 Birthday Date 💖
+            </div>
 
-    if (savedData.day3Breakfast?.restaurant) {
-        const breakfast = document.getElementById('day3Breakfast');
-        if (breakfast) breakfast.value = savedData.day3Breakfast.restaurant;
-    }
+            <div class="invite-sub">
+                "Chỉ cần là đi cùng nhau, làm gì cũng được"
+            </div>
 
-    if (savedData.day3Afternoon?.activities) {
-        savedData.day3Afternoon.activities.forEach(activity => {
-            const checkboxes = document.querySelectorAll('input[name="day3AfternoonActivities"]');
-            checkboxes.forEach(cb => {
-                if (cb.value === activity) cb.checked = true;
-            });
-        });
-    }
+            <div class="heart">— 💕 —</div>
 
-    if (savedData.day3Lunch?.restaurant) {
-        const lunch = document.getElementById('day3Lunch');
-        if (lunch) lunch.value = savedData.day3Lunch.restaurant;
-    }
+            <!-- DAY 2 -->
+            <div class="section">
+                <h3>🌙 Ngày 2/4</h3>
+                <div class="item">Ăn đêm: ${data.day2.dinner}</div>
+            </div>
 
-    if (savedData.day3Evening?.restaurant) {
-        const evening = document.getElementById('day3Evening');
-        if (evening) evening.value = savedData.day3Evening.restaurant;
-    }
+            <!-- DAY 3 -->
+            <div class="section">
+                <h3>🌅 Ngày 3/4</h3>
 
-    if (savedData.day4?.shift) {
-        const shiftRadio = document.querySelector(`input[name="day4Shift"][value="${savedData.day4.shift}"]`);
-        if (shiftRadio) {
-            shiftRadio.checked = true;
-            handleDay4ShiftChange();
+                <div class="item">🍳 Ăn Sáng: ${data.day3.meals.breakfast}</div>
+                <div class="item">✨ Chơi Sáng: ${data.day3.activities.morning.join(', ')}</div>
 
-            setTimeout(() => {
-                if (savedData.day4.activities) {
-                    savedData.day4.activities.forEach(activity => {
-                        const checkboxes = document.querySelectorAll('input[name="day4Activities"]');
-                        checkboxes.forEach(cb => {
-                            if (cb.value === activity) cb.checked = true;
-                        });
-                    });
-                }
+                <div class="item">🍜 Ăn Trưa: ${data.day3.meals.lunch}</div>
+                <div class="item">📸 Chơi Chiều: ${data.day3.activities.afternoon.join(', ')}</div>
+                
+                <div class="item">🍷 Fine Dining: ${data.day3.meals.dinner}</div>                
+                <div class="item">🌙 Chơi Tối: ${data.day3.activities.evening.join(', ')}</div>
+            </div>
 
-                if (savedData.day4.restaurant) {
-                    const mealSelect = document.getElementById('day4Meal');
-                    if (mealSelect) mealSelect.value = savedData.day4.restaurant;
-                }
-            }, 100);
-        }
-    }
+            <!-- DAY 4 -->
+            <div class="section">
+                <h3>🌞 Ngày 4/4</h3>
+
+                <div class="item">🍳 Ăn Sáng: ${data.day4.meals.breakfast}</div>
+                <div class="item">✨ Chơi Sáng: ${data.day4.activities.morning.join(', ')}</div>
+
+                <div class="item">🍜 Ăn Trưa: ${data.day4.meals.lunch}</div>
+                <div class="item">🎡 Chơi Chiều: ${data.day4.activities.afternoon.join(', ')}</div>
+                
+                <div class="item">🍷 ĂnTối: ${data.day4.meals.dinner}</div>
+                <div class="item">🌙 Tối: ${data.day4.activities.evening.join(', ')}</div>
+            </div>
+
+            <div class="heart">💌</div>
+
+            <div class="invite-sub">
+                "Anh chỉ cần em chọn. Còn lại để anh lo."
+            </div>
+
+        </div>
+    `;
 }
+
